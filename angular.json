@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "ApolloAcademy": {
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ApolloAcademy"
+    }
+  },
+  "defaultProject": "ApolloAcademy",
+  "cli": {
+    "analytics": "1659ddc8-f3ff-4e9e-9133-5feebd70f257"
+  }
 }
