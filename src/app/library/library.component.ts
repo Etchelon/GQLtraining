@@ -2,7 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import _ from 'lodash';
 import { filter } from 'rxjs/operators';
-import { BookService, IBook } from './book.service';
+import { BookService } from './book.service';
+import { IBook, LibraryService } from './generated/graphql';
 
 @Component({
 	selector: 'app-library',
@@ -13,16 +14,24 @@ export class LibraryComponent implements OnInit {
 	@ViewChild('editBookForm') editBookForm: TemplateRef<any>;
 
 	books: IBook[] = [];
+	docById: IBook;
 
-	constructor(private readonly dialog: MatDialog, private readonly bookService: BookService) {}
+	constructor(
+		private readonly dialog: MatDialog,
+		private readonly libraryService: LibraryService,
+		private readonly bookService: BookService
+	) {}
 
 	ngOnInit(): void {
-		const queryRef = this.bookService.watchAllBooks();
-		(window as any).__qref__ = queryRef;
-		queryRef.valueChanges.subscribe(res => {
-			console.log({ updatedQueryResult: res });
-			this.books = res.data.books;
-		});
+		this.libraryService.getAllBooksWatch().valueChanges.subscribe(res => (this.books = res.data.books));
+		this.libraryService.getBookWatch({ id: '1' }).valueChanges.subscribe(res => (this.docById = res.data.book));
+
+		// const queryRef = this.bookService.watchAllBooks();
+		// (window as any).__qref__ = queryRef;
+		// queryRef.valueChanges.subscribe(res => {
+		// 	console.log({ updatedQueryResult: res });
+		// 	this.books = res.data.books;
+		// });
 
 		// this.bookService.getAllBooks().subscribe(
 		// 	books => (this.books = books),
@@ -46,17 +55,19 @@ export class LibraryComponent implements OnInit {
 			.pipe(filter(_.identity))
 			.subscribe((editedBook: IBook) => {
 				const isNew = !editedBook.id;
-				const obs = isNew
-					? this.bookService.createOne(editedBook.title)
-					: this.bookService.updateReleaseInfo(editedBook.id, editedBook.author, editedBook.releaseYear);
-				obs.subscribe(
-					({ data }) => {
-						console.log('got data', data);
-					},
-					error => {
-						console.log('there was an error sending the query', error);
-					}
-				);
+				isNew
+					? this.libraryService.createBook({ info: { title: editedBook.title } }).subscribe()
+					: this.libraryService
+							.updateReleaseInfo({
+								info: {
+									id: editedBook.id,
+									author: editedBook.author,
+									releaseYear: editedBook.releaseYear,
+								},
+							})
+							.subscribe();
+				// ? this.bookService.createOne(editedBook.title)
+				// : this.bookService.updateReleaseInfo(editedBook.id, editedBook.author, editedBook.releaseYear);
 			});
 	}
 }

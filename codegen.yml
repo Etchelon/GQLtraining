@@ -10,9 +10,8 @@ generates:
         config:
             typesPrefix: I
             operationResultSuffix: 'GQL'
-            ngModule: 'GraphQLGenerated'
-            namedClient: 'GraphQLClient'
-            serviceName: 'GraphQLService'
+            serviceName: 'LibraryService'
+            serviceProvidedInRoot: false
             sdkClass: true
 
     ./graphql-model/schema.json:

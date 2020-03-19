@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BookService } from './book.service';
+import { LibraryService } from './generated/graphql';
 import { LibraryRoutingModule } from './library-routing.module';
 import { LibraryComponent } from './library.component';
 
@@ -22,6 +23,6 @@ import { LibraryComponent } from './library.component';
 		LibraryRoutingModule,
 	],
 	declarations: [LibraryComponent],
-	providers: [BookService],
+	providers: [BookService, LibraryService],
 })
 export class LibraryModule {}

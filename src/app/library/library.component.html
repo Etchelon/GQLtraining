@@ -7,7 +7,7 @@
 	</button>
 </div>
 <p>Here are all the books we have in the catalog right now:</p>
-
+<pre>{{ docById | json }}</pre>
 <div class="card-container">
 	<div *ngFor="let book of books; let i = index;" class="card block" (click)="editBook(book)">
 		<p>{{ book.title }}</p>
@@ -25,11 +25,11 @@
 		</mat-form-field>
 		<mat-form-field class="w-50">
 			<input matInput type="text" placeholder="The book's author"
-				[(ngModel)]="data.author" name="author" required>
+				[(ngModel)]="data.author" name="author" [required]="!data.id">
 		</mat-form-field>
 		<mat-form-field class="w-50">
 			<input matInput type="number" placeholder="The book's release year"
-				[(ngModel)]="data.releaseYear" name="year">
+				[(ngModel)]="data.releaseYear" name="year" [required]="data.id">
 		</mat-form-field>
 		<div class="mt-3">
 			<button mat-button type="button" mat-dialog-close>{{ "cancel" | uppercase }}</button>

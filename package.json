@@ -8,7 +8,7 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"graphql:codegen": "graphql-codegen --config codegen.yml"
+		"graphql:codegen": "graphql-codegen --config codegen.yml && ng lint --fix"
 	},
 	"private": true,
 	"dependencies": {

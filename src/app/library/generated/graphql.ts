@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 import * as ApolloCore from 'apollo-client';
 import gql from 'graphql-tag';
-import { undefined } from 'GraphQLGenerated';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
@@ -97,11 +96,10 @@ export const GetAllBooksDocument = gql`
 `;
 
 @Injectable({
-	providedIn: undefined,
+	providedIn: 'root',
 })
 export class IGetAllBooksGQL extends Apollo.Query<IGetAllBooksQueryGql, IGetAllBooksQueryVariables> {
 	document = GetAllBooksDocument;
-	client = 'GraphQLClient';
 }
 export const GetBookDocument = gql`
 	query GetBook($id: ID!) {
@@ -115,11 +113,10 @@ export const GetBookDocument = gql`
 `;
 
 @Injectable({
-	providedIn: undefined,
+	providedIn: 'root',
 })
 export class IGetBookGQL extends Apollo.Query<IGetBookQueryGql, IGetBookQueryVariables> {
 	document = GetBookDocument;
-	client = 'GraphQLClient';
 }
 export const CreateBookDocument = gql`
 	mutation CreateBook($info: NewBookInput!) {
@@ -131,11 +128,10 @@ export const CreateBookDocument = gql`
 `;
 
 @Injectable({
-	providedIn: undefined,
+	providedIn: 'root',
 })
 export class ICreateBookGQL extends Apollo.Mutation<ICreateBookMutationGql, ICreateBookMutationVariables> {
 	document = CreateBookDocument;
-	client = 'GraphQLClient';
 }
 export const UpdateReleaseInfoDocument = gql`
 	mutation UpdateReleaseInfo($info: UpdateReleaseInfoInput!) {
@@ -147,14 +143,13 @@ export const UpdateReleaseInfoDocument = gql`
 `;
 
 @Injectable({
-	providedIn: undefined,
+	providedIn: 'root',
 })
 export class IUpdateReleaseInfoGQL extends Apollo.Mutation<
 	IUpdateReleaseInfoMutationGql,
 	IUpdateReleaseInfoMutationVariables
 > {
 	document = UpdateReleaseInfoDocument;
-	client = 'GraphQLClient';
 }
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -168,7 +163,7 @@ interface MutationOptionsAlone<T, V> extends Omit<ApolloCore.MutationOptions<T, 
 interface SubscriptionOptionsAlone<V> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}
 
 @Injectable()
-export class GraphQLService {
+export class LibraryService {
 	constructor(
 		private iGetAllBooksGql: IGetAllBooksGQL,
 		private iGetBookGql: IGetBookGQL,
