@@ -1,0 +1,20 @@
+overwrite: true
+schema: './graphql-model/schema.graphql'
+generates:
+    ./src/app/library/generated/graphql.ts:
+        documents: ./src/app/library/operations/*.graphql
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-apollo-angular'
+        config:
+            typesPrefix: I
+            operationResultSuffix: 'GQL'
+            ngModule: 'GraphQLGenerated'
+            namedClient: 'GraphQLClient'
+            serviceName: 'GraphQLService'
+            sdkClass: true
+
+    ./graphql-model/schema.json:
+        plugins:
+            - 'introspection'

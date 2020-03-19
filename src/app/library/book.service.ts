@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
+import { ApolloQueryResult } from 'apollo-client';
 import gql from 'graphql-tag';
 import _ from 'lodash';
 import { Observable, throwError } from 'rxjs';
@@ -21,6 +22,24 @@ const BookQuery = gql`
 		book(id: $id) {
 			id
 			title
+			author
+			releaseYear
+		}
+	}
+`;
+
+const CreateBook = gql`
+	mutation CreateBook($info: NewBookInput!) {
+		addOne(book: $info) {
+			id
+			title
+		}
+	}
+`;
+
+const UpdateReleaseInfo = gql`
+	mutation UpdateReleaseInfo($info: UpdateReleaseInfoInput!) {
+		setReleaseInfo(info: $info) {
 			author
 			releaseYear
 		}
@@ -60,5 +79,33 @@ export class BookService {
 				tap(res => res.errors && throwError(res.errors)),
 				map(res => res.data.book)
 			);
+	}
+
+	createOne(title: string) {
+		return this.apollo.mutate<IBook>({
+			mutation: CreateBook,
+			variables: { info: { title } },
+			awaitRefetchQueries: true,
+			update: (proxy, { data }) => {
+				try {
+					const dataToUpdate = proxy.readQuery({ query: BooksQuery }) as any;
+					dataToUpdate.books.push((data as any).addOne);
+					proxy.writeQuery({ query: BooksQuery, data: dataToUpdate });
+				} catch (err) {
+					console.error(err);
+				}
+			},
+		});
+	}
+
+	updateReleaseInfo(bookId: string, author: string, year: number) {
+		return this.apollo.mutate<IBook>({
+			mutation: UpdateReleaseInfo,
+			variables: { info: { id: bookId, author, releaseYear: year } },
+		});
+	}
+
+	watchAllBooks(): QueryRef<{ books: IBook[] }> {
+		return this.apollo.watchQuery({ query: BooksQuery });
 	}
 }
