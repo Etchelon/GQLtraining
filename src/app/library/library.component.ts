@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import _ from 'lodash';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { BookService } from './book.service';
 import { IBook, LibraryService } from './generated/graphql';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-library',
@@ -15,6 +16,7 @@ export class LibraryComponent implements OnInit {
 
 	books: IBook[] = [];
 	docById: IBook;
+	docById$: Observable<IBook>;
 
 	constructor(
 		private readonly dialog: MatDialog,
@@ -25,6 +27,7 @@ export class LibraryComponent implements OnInit {
 	ngOnInit(): void {
 		this.libraryService.getAllBooksWatch().valueChanges.subscribe(res => (this.books = res.data.books));
 		this.libraryService.getBookWatch({ id: '1' }).valueChanges.subscribe(res => (this.docById = res.data.book));
+		this.docById$ = this.libraryService.getBookWatch({ id: '1' }).valueChanges.pipe(map(res => res.data.book));
 
 		// const queryRef = this.bookService.watchAllBooks();
 		// (window as any).__qref__ = queryRef;

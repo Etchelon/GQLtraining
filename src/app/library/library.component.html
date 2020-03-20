@@ -8,6 +8,7 @@
 </div>
 <p>Here are all the books we have in the catalog right now:</p>
 <pre>{{ docById | json }}</pre>
+<pre>{{ docById$ | async | json }}</pre>
 <div class="card-container">
 	<div *ngFor="let book of books; let i = index;" class="card block" (click)="editBook(book)">
 		<p>{{ book.title }}</p>
