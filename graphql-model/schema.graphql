@@ -4,7 +4,7 @@
 # -----------------------------------------------
 
 type Book {
-	id: ID!
+	id: Int!
 	title: String!
 	author: String
 	releaseYear: Float
@@ -21,11 +21,11 @@ input NewBookInput {
 
 type Query {
 	books: [Book!]!
-	book(id: ID!): Book!
+	book(id: Int!): Book!
 }
 
 input UpdateReleaseInfoInput {
-	id: ID!
+	id: Int!
 	author: String!
 	releaseYear: Int!
 }
