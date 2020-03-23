@@ -1,0 +1,28 @@
+{
+	"name": "spike-typegraphql",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Andrea Bertoldo",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"start": "ts-node src/server.ts"
+	},
+	"dependencies": {
+		"apollo-server": "2.11.0",
+		"apollo-server-express": "2.11.0",
+		"body-parser": "1.19.0",
+		"express": "^4.17.1",
+		"graphql": "^14.6.0",
+		"graphql-tools": "4.0.7",
+		"lodash": "^4.17.15",
+		"reflect-metadata": "^0.1.13",
+		"type-graphql": "^0.17.6"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.149",
+		"@types/node": "^13.9.1",
+		"ts-node": "^8.6.2",
+		"typescript": "^3.8.3"
+	}
+}

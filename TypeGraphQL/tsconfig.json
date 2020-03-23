@@ -1,0 +1,20 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"importHelpers": true,
+		"lib": ["ESNext", "DOM"],
+		"sourceMap": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"moduleResolution": "Node",
+		"target": "ESNext",
+		"types": ["reflect-metadata", "node"],
+		"module": "CommonJS",
+		"baseUrl": "./"
+	},
+	"exclude": [
+		"node_modules",
+		".build"
+	]
+}
