@@ -8,7 +8,8 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"graphql:codegen": "graphql-codegen --config codegen.yml && ng lint --files **/generated/*graphql.ts --fix"
+        "graphql:sync-schema": "mkdir -p ./graphql-model && cp ../TypeGraphQL/generated/schema.graphql ./graphql-model/schema.graphql",
+		"graphql:codegen": "npm run graphql:sync-schema && graphql-codegen --config codegen.yml && ng lint --files **/generated/*graphql.ts --fix"
 	},
 	"private": true,
 	"dependencies": {
