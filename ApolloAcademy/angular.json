@@ -125,6 +125,46 @@
           }
         }
       }
+    },
+    "lazy-components": {
+      "projectType": "library",
+      "root": "projects/lazy-components",
+      "sourceRoot": "projects/lazy-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lazy-components/tsconfig.lib.json",
+            "project": "projects/lazy-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lazy-components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lazy-components/src/test.ts",
+            "tsConfig": "projects/lazy-components/tsconfig.spec.json",
+            "karmaConfig": "projects/lazy-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lazy-components/tsconfig.lib.json",
+              "projects/lazy-components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ApolloAcademy",

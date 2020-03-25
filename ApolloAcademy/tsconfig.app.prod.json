@@ -1,0 +1,8 @@
+{
+	"extends": "./tsconfig.app.json",
+	"compilerOptions": {
+		"paths": {
+			"lazy-components": ["./dist/lazy-components"]
+		}
+	}
+}
