@@ -1,12 +1,14 @@
-import { Resolver, Query, Arg, Mutation, Int } from "type-graphql";
+import { Resolver, Query, Arg, Mutation, Int, FieldResolver } from "type-graphql";
 import { BookService } from "../services/book.service";
 import { Book } from "../types/book.type";
 import { UpdateReleaseInfoInput } from "../types/release-info.input";
 import { NewBookInput } from "../types/new-book.input";
+import { MyExtensionNamespace } from '../my-extension/my-extension-namespace';
+import { MyExtensionResolver } from '../my-extension/resolvers/my-extension.resolver';
 
-@Resolver(Book)
-export class BookResolver {
-	private bookService = new BookService();
+@Resolver()
+export class MainResolver {
+    private bookService = new BookService();
 
 	@Query(returns => [Book])
 	async books(): Promise<Book[]> {
@@ -32,5 +34,14 @@ export class BookResolver {
 		const { id, author, releaseYear } = input;
 		const ret = await this.bookService.updateReleaseInfo(id, author, releaseYear);
 		return ret;
-	}
+    }
+    
+    @Query(returns => MyExtensionNamespace)
+    myNamespace(): MyExtensionNamespace {
+        var resolver = new MyExtensionResolver();
+        return {
+            query1: resolver.query1(),
+            query2: resolver.query2(),
+        };
+    }
 }

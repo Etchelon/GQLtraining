@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
-import { BookResolver } from "./resolvers/book.resolver";
+import { MainResolver } from "./resolvers/main.resolver";
 
 buildSchema({
-	resolvers: [BookResolver],
+	resolvers: [MainResolver],
 	emitSchemaFile: {
 		path: `${__dirname}/../generated/schema.graphql`,
 		commentDescriptions: true,
